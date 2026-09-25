@@ -43,21 +43,16 @@ available = True
 
 if available:
 
-    requests.post(
-        f"https://ntfy.sh/{TOPIC}",
-        headers={
-            "Title": "CKT22 Category A AVAILABLE",
-            "Priority": "urgent",
-            "Tags": "warning,ticket"
-        },
-        data="""
-Category A - General available
-
-Price: ¥10,000
-
-Open ticket site NOW!
-"""
-    )
+requests.post(
+    f"https://ntfy.sh/{TOPIC}",
+    headers={
+        "Title": "TICKET AVAILABLE NOW",
+        "Priority": "urgent",
+        "Click": "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
+        "Tags": "warning"
+    },
+    data="Category A - General available. Tap to open."
+)
 
     print("AVAILABLE")
 
