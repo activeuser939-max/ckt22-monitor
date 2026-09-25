@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-TOPIC = "YOUR_NTFY_TOPIC"
+TOPIC = "ckt22-ayaz-final-7382"
 
 URL = (
     "https://generalsale.tickets-aichi-nagoya2026.org/"
