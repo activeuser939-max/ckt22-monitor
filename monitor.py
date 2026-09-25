@@ -41,8 +41,6 @@ if ticket_row:
         ):
             available = True
 
-available = True
-
 if available:
 
     requests.post(
