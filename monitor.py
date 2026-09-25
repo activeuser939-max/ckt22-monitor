@@ -9,68 +9,18 @@ URL = (
 )
 
 headers = {
-    "User-Agent": (
-        "Mozilla/5.0 "
-        "(Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 "
-        "Chrome/140 Safari/537.36"
-    )
+    "User-Agent": "Mozilla/5.0"
 }
 
-try:
+html = requests.get(URL, headers=headers).text
 
-    html = requests.get(
-        URL,
-        headers=headers,
-        timeout=20
-    ).text
+soup = BeautifulSoup(html, "html.parser")
 
-    #
-    # CAPTCHA detection
-    #
+ticket_row = soup.find("div", id="productItem_3797")
 
-    if "captcha" in html.lower():
+available = False
 
-        requests.post(
-            f"https://ntfy.sh/{TOPIC}",
-            headers={
-                "Title": "CKT22 CAPTCHA Warning",
-                "Priority": "high"
-            },
-            data=(
-                "CAPTCHA detected. "
-                "Monitor may not be able to verify availability."
-            )
-        )
-
-        print("CAPTCHA DETECTED")
-        raise SystemExit
-
-    soup = BeautifulSoup(html, "html.parser")
-
-    ticket_row = soup.find(
-        "div",
-        id="productItem_3797"
-    )
-
-    if ticket_row is None:
-
-        requests.post(
-            f"https://ntfy.sh/{TOPIC}",
-            headers={
-                "Title": "CKT22 Monitor Warning",
-                "Priority": "high"
-            },
-            data=(
-                "Category A section "
-                "(productItem_3797) not found."
-            )
-        )
-
-        print("CATEGORY A ROW NOT FOUND")
-        raise SystemExit
-
-    available = False
+if ticket_row:
 
     plus_button = ticket_row.find(
         "div",
@@ -83,35 +33,28 @@ try:
 
         if (
             "pointer-events: none" not in style
-            and
-            plus_button.get("onclick") is not None
+            and plus_button.get("onclick") is not None
         ):
             available = True
-    available = True
-    if available:
 
-        requests.post(
-            f"https://ntfy.sh/{TOPIC}",
-            headers={
-                "Title": "CKT22 Category A Available",
-                "Priority": "urgent",
-                "Click":
-                    "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
-                "Tags": "warning,ticket"
-            },
-            data=(
-                "Category A - General available.\n\n"
-                "Price: ¥10,000\n\n"
-                "Tap to open the ticket page."
-            )
-        )
+# TEST ONLY
+available = True
 
-        print("AVAILABLE")
+if available:
 
-    else:
+    requests.post(
+        f"https://ntfy.sh/{TOPIC}",
+        headers={
+            "Title": "TICKET AVAILABLE NOW",
+            "Priority": "urgent",
+            "Click": "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
+            "Tags": "warning"
+        },
+        data="Category A - General available. Tap to open."
+    )
 
-        print("NOT AVAILABLE")
+    print("AVAILABLE")
 
-except Exception as e:
+else:
 
-    print(f"ERROR: {e}")
+    print("NOT AVAILABLE")
