@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 TOPIC = "ckt22-ayaz-final-7382"
 
@@ -16,7 +17,10 @@ html = requests.get(URL, headers=headers).text
 
 soup = BeautifulSoup(html, "html.parser")
 
-ticket_row = soup.find("div", id="productItem_3797")
+ticket_row = soup.find(
+    "div",
+    id="productItem_3797"
+)
 
 available = False
 
@@ -37,7 +41,6 @@ if ticket_row:
         ):
             available = True
 
-# TEST ONLY
 available = True
 
 if available:
@@ -47,14 +50,32 @@ if available:
         headers={
             "Title": "TICKET AVAILABLE NOW",
             "Priority": "urgent",
-            "Click": "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
+            "Click": (
+                "https://generalsale.tickets-aichi-nagoya2026.org/"
+                "showProduct.html?idProduct=492"
+            ),
             "Tags": "warning"
         },
-        data="Category A - General available. Tap to open."
+        data=(
+            "Category A - General AVAILABLE\n\n"
+            "Price: ¥10,000\n\n"
+            "Tap to open ticket page."
+        )
     )
 
     print("AVAILABLE")
 
 else:
+
+    requests.post(
+        f"https://ntfy.sh/{TOPIC}",
+        headers={
+            "Title": "CKT22 Status"
+        },
+        data=(
+            "Category A - General NOT AVAILABLE\n\n"
+            f"Checked: {datetime.now()}"
+        )
+    )
 
     print("NOT AVAILABLE")
