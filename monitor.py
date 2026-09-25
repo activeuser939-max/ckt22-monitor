@@ -1,33 +1,55 @@
 import requests
+from bs4 import BeautifulSoup
 
-TOPIC = "ckt22-ayaz-final-7382"
+TOPIC = "YOUR_NTFY_TOPIC"
 
 URL = (
     "https://generalsale.tickets-aichi-nagoya2026.org/"
     "showProduct.html?idProduct=492"
 )
 
-html = requests.get(
-    URL,
-    headers={
-        "User-Agent":
-        "Mozilla/5.0"
-    }
-).text
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
 
-# available = (
-#     "productItem_3797" in html
-#     and
-#     'pointer-events: none;" title="Increase" class="productPlus'
-#     not in html
-# )
-available = True
+html = requests.get(URL, headers=headers).text
+
+soup = BeautifulSoup(html, "html.parser")
+
+ticket_row = soup.find("div", id="productItem_3797")
+
+available = False
+
+if ticket_row:
+
+    plus_button = ticket_row.find(
+        "div",
+        class_="productPlus"
+    )
+
+    if plus_button:
+
+        style = plus_button.get("style", "")
+
+        if "pointer-events: none" not in style:
+            available = True
 
 if available:
 
     requests.post(
         f"https://ntfy.sh/{TOPIC}",
-        data="🏏 CKT22 Category A General Available!"
+        headers={
+            "Title": "🚨 CKT22 AVAILABLE",
+            "Priority": "urgent",
+            "Tags": "warning,ticket"
+        },
+        data="""
+Category A - General available
+
+Price: ¥10,000
+
+Open ticket site NOW!
+"""
     )
 
     print("AVAILABLE")
