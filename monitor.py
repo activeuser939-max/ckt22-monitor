@@ -46,7 +46,7 @@ if available:
     requests.post(
         f"https://ntfy.sh/{TOPIC}",
         headers={
-            "Title": "🚨 CKT22 AVAILABLE",
+            "Title": "CKT22 Category A AVAILABLE",
             "Priority": "urgent",
             "Tags": "warning,ticket"
         },
