@@ -15,12 +15,13 @@ html = requests.get(
     }
 ).text
 
-available = (
-    "productItem_3797" in html
-    and
-    'pointer-events: none;" title="Increase" class="productPlus'
-    not in html
-)
+# available = (
+#     "productItem_3797" in html
+#     and
+#     'pointer-events: none;" title="Increase" class="productPlus'
+#     not in html
+# )
+available = True
 
 if available:
 
