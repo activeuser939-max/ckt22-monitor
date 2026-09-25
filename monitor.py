@@ -40,7 +40,7 @@ if ticket_row:
             and plus_button.get("onclick") is not None
         ):
             available = True
-available = True
+
 if available:
 
     requests.post(
