@@ -66,10 +66,10 @@ else:
     requests.post(
         f"https://ntfy.sh/{TOPIC}",
         headers={
-            "Title": "CKT22 Status"
+            "Title": "GitHub CKT22 Status"
         },
         data=(
-            "GH Category A - General NOT AVAILABLE\n\n"
+            "Category A - General NOT AVAILABLE\n\n"
             f"Checked: {datetime.now(jst).strftime('%Y-%m-%d %H:%M:%S JST')}"
         )
     )
