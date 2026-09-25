@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 TOPIC = "ckt22-ayaz-final-7382"
 
@@ -60,16 +60,18 @@ if available:
     print("AVAILABLE")
 
 else:
-
-    requests.post(
-        f"https://ntfy.sh/{TOPIC}",
-        headers={
-            "Title": "CKT22 Status"
-        },
-        data=(
-            "Category A - General NOT AVAILABLE\n\n"
-            f"Checked: {datetime.now()}"
-        )
-    )
-
-    print("NOT AVAILABLE")
+ 
+jst = timezone(timedelta(hours=9))
+ 
+requests.post(
+f"https://ntfy.sh/{TOPIC}",
+headers={
+"Title": "CKT22 Status"
+},
+data=(
+"Category A - General NOT AVAILABLE\n\n"
+f"Checked: {datetime.now(jst).strftime('%Y-%m-%d %H:%M:%S JST')}"
+)
+)
+ 
+print("NOT AVAILABLE")
