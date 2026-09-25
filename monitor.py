@@ -56,11 +56,7 @@ if available:
             ),
             "Tags": "warning"
         },
-        data=(
-            "Category A - General AVAILABLE\n\n"
-            "Price: ¥10,000\n\n"
-            "Tap to open ticket page."
-        )
+        data="Category A - General available. Tap to open."
     )
 
     print("AVAILABLE")
