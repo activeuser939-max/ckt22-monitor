@@ -31,10 +31,14 @@ if ticket_row:
 
         style = plus_button.get("style", "")
 
-        if "pointer-events: none" not in style:
+        if (
+            "pointer-events: none" not in style
+            and
+            plus_button.get("onclick") is not None
+        ):
             available = True
 
-# Force notification test
+# TEST ONLY
 available = True
 
 if available:
