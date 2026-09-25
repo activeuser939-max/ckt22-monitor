@@ -34,6 +34,9 @@ if ticket_row:
         if "pointer-events: none" not in style:
             available = True
 
+# Force notification test
+available = True
+
 if available:
 
     requests.post(
