@@ -46,7 +46,7 @@ if available:
     requests.post(
         f"https://ntfy.sh/{TOPIC}",
         headers={
-            "Title": "TICKET AVAILABLE NOW",
+            "Title": "GH TICKET AVAILABLE NOW",
             "Priority": "urgent",
             "Click": (
                 "https://generalsale.tickets-aichi-nagoya2026.org/"
@@ -69,7 +69,7 @@ else:
             "Title": "CKT22 Status"
         },
         data=(
-            "Category A - General NOT AVAILABLE\n\n"
+            "GH Category A - General NOT AVAILABLE\n\n"
             f"Checked: {datetime.now(jst).strftime('%Y-%m-%d %H:%M:%S JST')}"
         )
     )
