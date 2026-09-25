@@ -33,8 +33,7 @@ if ticket_row:
 
         if (
             "pointer-events: none" not in style
-            and
-            plus_button.get("onclick") is not None
+            and plus_button.get("onclick") is not None
         ):
             available = True
 
@@ -43,16 +42,16 @@ available = True
 
 if available:
 
-requests.post(
-    f"https://ntfy.sh/{TOPIC}",
-    headers={
-        "Title": "TICKET AVAILABLE NOW",
-        "Priority": "urgent",
-        "Click": "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
-        "Tags": "warning"
-    },
-    data="Category A - General available. Tap to open."
-)
+    requests.post(
+        f"https://ntfy.sh/{TOPIC}",
+        headers={
+            "Title": "TICKET AVAILABLE NOW",
+            "Priority": "urgent",
+            "Click": "https://generalsale.tickets-aichi-nagoya2026.org/showProduct.html?idProduct=492",
+            "Tags": "warning"
+        },
+        data="Category A - General available. Tap to open."
+    )
 
     print("AVAILABLE")
 
